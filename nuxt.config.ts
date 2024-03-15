@@ -95,23 +95,33 @@ export default defineNuxtConfig({
     globalAppMiddleware: true,
     baseURL: process.env.NEW_API_BASE_URL + "/api",
     provider: {
-      type: "local",
+      type: "refresh",
       sessionDataType: { role: "USER", username: "string", password: "string" },
       endpoints: {
         signIn: { path: "/auth/login", method: "post" },
         signOut: false, // not
         signUp: { path: "/auth/registration", method: "post" },
         getSession: { path: "/user", method: "get" },
+        refresh: { path: "auth/refresh", method: "post" },
       },
       token: {
         signInResponseTokenPointer: "/accessToken",
+        cookieName: "auth.token",
+        maxAgeInSeconds: 10 * 60,
+      },
+      refreshToken: {
+        signInResponseRefreshTokenPointer: "/refreshToken",
+        cookieName: "auth.refresh-token",
+        maxAgeInSeconds: 10,
       },
       pages: {
         login: "/login",
       },
     },
-    enableSessionRefreshPeriodically: 5000,
-    enableSessionRefreshOnWindowFocus: true,
+    session: {
+      // enableRefreshOnWindowFocus: true, // Refetch user session every time when browser tab will be focused
+      // enableRefreshPeriodically: 5000,
+    },
     globalMiddlewareOptions: {
       allow404WithoutAuth: true, // Defines if the 404 page will be accessible while unauthenticated
       addDefaultCallbackUrl: "/", // Where authenticated user will be redirected to by default

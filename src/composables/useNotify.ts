@@ -1,5 +1,5 @@
 import { useAppState } from "utils/useAppState";
-import type { Notify } from "components/ui/app-notify";
+import type { Notify } from "components/ui/notify";
 const [getNotifies, setNotifies] = useAppState<Notify[]>("notifies", () => []);
 
 const removeNotify = () => {

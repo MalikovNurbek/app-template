@@ -31,7 +31,7 @@ definePageMeta({
   },
 });
 
-const { signIn } = useAuth();
+const { signIn, token, refreshToken } = useAuth();
 
 const isLoading = ref(false);
 
@@ -43,19 +43,24 @@ const login = async (values: SubmitEvent) => {
       username: formData.get("username"),
       password: formData.get("password"),
     },
-    { callbackUrl: "/" },
+    { callbackUrl: "/", external: true },
   )
     .then((res) => {
+      console.log({
+        res,
+        token: token.value,
+        refreshToken: refreshToken.value,
+      });
       notify({
         type: "success",
-        message: JSON.stringify(res.message),
+        message: "Добро пожаловать!",
       });
     })
     .catch((e) => {
       console.log("err", e);
       notify({
         type: "error",
-        message: JSON.stringify(e.message),
+        message: JSON.stringify(e),
       });
     })
     .finally(() => {
@@ -158,7 +163,7 @@ form {
       transition: none 0s;
     }
 
-    &:focus {tdf
+    &:focus {
       outline: 1px transparent;
     }
 

@@ -38,7 +38,7 @@ const notifies = computed(() => getNotifies().value);
     align-items: center;
     gap: 12px;
     background-color: #ffff;
-    color: #111111;
+    color: $primary-color-2;
     padding: 12px;
     width: 311px;
     min-height: 53px;
