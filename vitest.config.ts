@@ -13,6 +13,7 @@ const initPathAliases = () => {
     { relative: "types", path: "./src/types" },
     { relative: "hooks", path: "./src/hooks" },
     { relative: "stores", path: "./src/stores" },
+    { relative: "static", path: "./src/static" },
   ];
 
   return paths.map((item) => ({

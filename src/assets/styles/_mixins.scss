@@ -1,0 +1,59 @@
+@import "variables";
+@import "utils";
+
+@mixin text(
+  $size: 16,
+  $color: $primary-color-2,
+  $lh: 24,
+  $fw: 400,
+  $ff: $base-font-family
+) {
+  font-size: to-rem($size);
+  color: $color;
+  line-height: to-rem($lh);
+  font-weight: $fw;
+  font-family: $ff;
+}
+
+@mixin position($type: static, $t: auto, $r: auto, $b: auto, $l: auto) {
+  position: $type;
+  top: $t;
+  right: $r;
+  bottom: $b;
+  left: $l;
+}
+
+@mixin flex($type: row, $gap: 0, $justify: flex-start, $align: flex-start) {
+  display: flex;
+  flex-direction: $type;
+  gap: to-rem($gap);
+  justify-content: $justify;
+  align-items: $align;
+}
+
+
+@mixin circle($width: 50px, $height: 50px, $color: "") {
+  width: to-rem($width);
+  height: to-rem($height);
+  border-radius: 50%;
+  background: $color;
+}
+
+@mixin box($width: 50px, $height: 50px, $color: "") {
+  width: to-rem($width);
+  height: to-rem($height);
+  background: $color;
+}
+
+@mixin pseudo(
+  $width: 100%,
+  $height: 100%,
+  $display: inline-block,
+  $pos: absolute,
+  $content: ""
+) {
+  content: $content;
+  display: $display;
+  position: $pos;
+  @include box($width, $height);
+}

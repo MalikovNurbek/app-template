@@ -1,0 +1,10 @@
+@import "variables";
+
+@function to-rem($size, $font-size: $base-font-size) {
+  @return calc($size / $font-size) * 1rem;
+}
+
+@function to-vw($size) {
+  @return calc($size / 14.4) * 1vw;
+}
+
