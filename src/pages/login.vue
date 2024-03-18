@@ -18,17 +18,12 @@
       </button>
     </form>
 
-    <Form
-      class="form"
-      :errors="{ username: 'sdfsdf' }"
-      @submit="submit"
-      :options="{}"
-    >
+    <Form class="form" :options="formOptions" :submit="submit">
       <FormField v-slot="{ field, invalid }" name="username">
         <TextField
           v-bind="field"
           placeholder="Enter username"
-          :invalid="invalid"
+          name="username"
         />
       </FormField>
 
@@ -37,7 +32,7 @@
           v-bind="field"
           placeholder="Enter password"
           type="password"
-          :invalid="invalid"
+          name="password"
         />
       </FormField>
       <button type="submit">submit</button>
@@ -96,24 +91,20 @@ const schema = yup.object().shape({
   password: yup.string().required("required").max(8),
 });
 
-const { handleSubmit, setErrors } = useForm({
+const formOptions: any = {
   validationSchema: schema,
   // initialErrors, TODO
   // initialValues,
   // initialTouched,
   // keepValuesOnUnmount,
   // validateOnMount,
-});
+};
 
-const onSubmit = () => {
+const submit = () =>
   setFormErrors({
     username: ["Must be number", "Must sexy"],
     password: ["Must be password"],
   });
-  setErrors(getFormErrors().value);
-};
-
-const submit = handleSubmit(onSubmit);
 </script>
 
 <style scoped lang="scss">

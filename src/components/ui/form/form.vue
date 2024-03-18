@@ -1,36 +1,26 @@
 <template>
-  <form v-bind="attrs">
-    <slot :errors="errors" />
+  <form @submit.prevent="onSubmit">
+    <slot />
   </form>
 </template>
 
 <script setup lang="ts">
-import { useAttrs } from "vue";
-
-interface IError {
-  [key: string]: string;
-}
-
 interface FormProps {
-  errors: IError;
-  options: Record<string, any>;
+  options: any;
+  submit: () => void;
+  invalidSubmit?: () => void;
 }
 
-defineProps<FormProps>();
-//
-// const attrs = useAttrs();
-//
-// const { setErrors } = useForm();
-//
-// const formErrors = computed(() => getFormErrors().value);
-//
-// watch(formErrors, () => {
-//   if (formErrors.value) {
-//     setErrors(formErrors.value);
-//   }
-// });
+const props = defineProps<FormProps>();
 
-defineExpose({
-  titleTest: "la la la",
+const { handleSubmit, setErrors } = useForm(props.options);
+
+const onSubmit = handleSubmit(props.submit);
+
+const formErrors = computed(() => getFormErrors().value);
+watch(formErrors, () => {
+  if (formErrors.value) {
+    setErrors(formErrors.value);
+  }
 });
 </script>

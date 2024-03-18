@@ -6,15 +6,8 @@
         :value="value"
         :handle-change="handleChange"
         :errors="errors"
-        :invalid="!!errors.length || isError"
       />
-      <!--      <span v-if="errors.length">{{ errors[0] }}</span>-->
-      <ErrorMessage v-slot="{ message }" :name="name">
-        {{ message }}
-      </ErrorMessage>
-      <!--      <span v-if="!errors.length && isError">{{-->
-      <!--        globalErrors[props.name]-->
-      <!--      }}</span>-->
+      <ErrorMessage class="field__error" as="span" :name="name" />
     </div>
   </Field>
 </template>
@@ -28,21 +21,23 @@ interface FormFieldProps {
 
 const props = defineProps<FormFieldProps>();
 
-const { errors } = useField(props.name);
+const { meta } = useField(props.name);
 
-const globalErrors = computed(() => getFormErrors().value ?? {});
+const invalid = computed(() => !meta.valid);
 
-const isError = computed(() => !!globalErrors.value[props.name]);
+provide("invalid", invalid);
+
+watch(meta, () => console.log(meta));
 </script>
 <style scoped lang="scss">
 .field {
   display: flex;
   flex-direction: column;
 
-  span {
-    font-size: 12px;
+  &__error {
     color: red;
-    margin: 6px 0;
+    margin: 4px 0;
+    font-size: 12px;
   }
 }
 </style>

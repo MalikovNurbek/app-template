@@ -3,7 +3,7 @@
     v-model="model"
     :type="type"
     :placeholder="placeholder"
-    :class="invalid && 'invalid'"
+    :class="{ invalid }"
   />
 </template>
 <script setup lang="ts">
@@ -11,7 +11,6 @@ interface TextFieldProps {
   value?: string;
   placeholder?: string;
   type?: string;
-  invalid?: boolean;
 }
 
 interface TextFieldEmits {
@@ -34,6 +33,10 @@ const model = computed({
     emits("update:value", newValue);
   },
 });
+
+const invalid = inject("invalid", ref(false));
+
+watch(invalid, () => console.log(invalid.value));
 </script>
 <style scoped lang="scss">
 input {
