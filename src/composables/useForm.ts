@@ -1,8 +1,8 @@
 import { useAppState } from "utils/useAppState";
 
-import type { IError } from "components/ui/form";
+import type { FormError } from "components/ui/form";
 
-const [getFormErrors, setFormErrors] = useAppState<IError | null>(
+const [getFormErrors, setFormErrors] = useAppState<FormError | null>(
   "form-errors",
   () => null,
 );

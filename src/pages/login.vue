@@ -18,7 +18,12 @@
       </button>
     </form>
 
-    <Form @submit="submit" :errors="{ username: 'sdfsdf' }" class="form">
+    <Form
+      class="form"
+      :errors="{ username: 'sdfsdf' }"
+      @submit="submit"
+      :options="{}"
+    >
       <FormField v-slot="{ field, invalid }" name="username">
         <TextField
           v-bind="field"
@@ -47,7 +52,7 @@ import * as yup from "yup";
 definePageMeta({
   title: "Signin",
   public: true,
-  layout: "not-auth",
+  layout: false,
   auth: {
     unauthenticatedOnly: true,
     navigateAuthenticatedTo: "/",
@@ -68,12 +73,7 @@ const login = async (values: SubmitEvent) => {
     },
     { callbackUrl: "/", external: true },
   )
-    .then((res) => {
-      console.log({
-        res,
-        token: token.value,
-        refreshToken: refreshToken.value,
-      });
+    .then(() => {
       notify({
         type: "success",
         message: "Добро пожаловать!",
@@ -96,10 +96,22 @@ const schema = yup.object().shape({
   password: yup.string().required("required").max(8),
 });
 
-const { handleSubmit } = useForm({ validationSchema: schema });
+const { handleSubmit, setErrors } = useForm({
+  validationSchema: schema,
+  // initialErrors, TODO
+  // initialValues,
+  // initialTouched,
+  // keepValuesOnUnmount,
+  // validateOnMount,
+});
 
-const onSubmit = () =>
-  setFormErrors({ username: "Must be number", password: "Must be password" });
+const onSubmit = () => {
+  setFormErrors({
+    username: ["Must be number", "Must sexy"],
+    password: ["Must be password"],
+  });
+  setErrors(getFormErrors().value);
+};
 
 const submit = handleSubmit(onSubmit);
 </script>

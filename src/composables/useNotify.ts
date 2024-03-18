@@ -1,6 +1,6 @@
 import { useAppState } from "utils/useAppState";
-import type { Notify } from "components/ui/notify";
-const [getNotifies, setNotifies] = useAppState<Notify[]>("notifies", () => []);
+import type { Types } from "components/ui/notify";
+const [getNotifies, setNotifies] = useAppState<Types[]>("notifies", () => []);
 
 const removeNotify = () => {
   const notifies = getNotifies().value;
@@ -8,7 +8,7 @@ const removeNotify = () => {
   setNotifies(notifies);
 };
 
-const notify = (notify: Omit<Notify, "id">) => {
+const notify = (notify: Omit<Types, "id">) => {
   const notifies = getNotifies().value;
   const timerId = setTimeout(() => removeNotify(), 3000);
 

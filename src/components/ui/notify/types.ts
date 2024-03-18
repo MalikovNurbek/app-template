@@ -1,6 +1,6 @@
 export type TypeNotify = "success" | "error" | "warning";
 
-export interface Notify {
+export interface Types {
   id: number;
   message: string;
   type: TypeNotify;

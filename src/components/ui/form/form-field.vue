@@ -8,16 +8,19 @@
         :errors="errors"
         :invalid="!!errors.length || isError"
       />
-      <span v-if="errors.length">{{ errors[0] }}</span>
-      <span v-if="!errors.length && isError">{{
-        globalErrors[props.name]
-      }}</span>
+      <!--      <span v-if="errors.length">{{ errors[0] }}</span>-->
+      <ErrorMessage v-slot="{ message }" :name="name">
+        {{ message }}
+      </ErrorMessage>
+      <!--      <span v-if="!errors.length && isError">{{-->
+      <!--        globalErrors[props.name]-->
+      <!--      }}</span>-->
     </div>
   </Field>
 </template>
 
 <script setup lang="ts">
-import { Field } from "vee-validate";
+import { Field, ErrorMessage } from "vee-validate";
 
 interface FormFieldProps {
   name: string;
