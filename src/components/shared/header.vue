@@ -50,7 +50,7 @@ const links = [
 const { data: userData, signOut } = useAuth();
 
 const logout = () => {
-  signOut({ callbackUrl: "login" });
+  signOut({ callbackUrl: "/login", external: true });
 };
 </script>
 

@@ -106,13 +106,13 @@ export default defineNuxtConfig({
       },
       token: {
         signInResponseTokenPointer: "/accessToken",
-        cookieName: "auth.token",
-        maxAgeInSeconds: 10 * 60,
+        cookieName: "auth.tokens",
+        maxAgeInSeconds: 10,
       },
       refreshToken: {
         signInResponseRefreshTokenPointer: "/refreshToken",
-        cookieName: "auth.refresh-token",
-        maxAgeInSeconds: 10,
+        cookieName: "auth.tokens",
+        maxAgeInSeconds: 60 * 60,
       },
       pages: {
         login: "/login",
