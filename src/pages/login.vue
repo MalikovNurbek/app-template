@@ -17,10 +17,33 @@
         submit form
       </button>
     </form>
+
+    <Form @submit="submit" :errors="{ username: 'sdfsdf' }" class="form">
+      <FormField v-slot="{ field, invalid }" name="username">
+        <TextField
+          v-bind="field"
+          placeholder="Enter username"
+          :invalid="invalid"
+        />
+      </FormField>
+
+      <FormField v-slot="{ field, invalid }" name="password">
+        <TextField
+          v-bind="field"
+          placeholder="Enter password"
+          type="password"
+          :invalid="invalid"
+        />
+      </FormField>
+      <button type="submit">submit</button>
+    </Form>
   </div>
 </template>
 
 <script setup lang="ts">
+import { Form, FormField, TextField } from "components/ui";
+import * as yup from "yup";
+
 definePageMeta({
   title: "Signin",
   public: true,
@@ -67,6 +90,18 @@ const login = async (values: SubmitEvent) => {
       isLoading.value = false;
     });
 };
+
+const schema = yup.object().shape({
+  username: yup.string().required("required").max(5),
+  password: yup.string().required("required").max(8),
+});
+
+const { handleSubmit } = useForm({ validationSchema: schema });
+
+const onSubmit = () =>
+  setFormErrors({ username: "Must be number", password: "Must be password" });
+
+const submit = handleSubmit(onSubmit);
 </script>
 
 <style scoped lang="scss">
@@ -181,5 +216,10 @@ form {
       display: none;
     }
   }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>
