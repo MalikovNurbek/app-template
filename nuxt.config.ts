@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 import svgLoader from "vite-svg-loader";
 import postcssNormalize from "postcss-normalize";
 import VueI18nVitePlugin from "@intlify/unplugin-vue-i18n/vite";
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 const getScssAdditionalData = (names: string[]) => {
   return names.reduce((acc, name) => {
@@ -16,7 +17,7 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   srcDir: "./src",
   build: {
-    transpile: ["vue-i18n"],
+    transpile: ["vue-i18n", "vuetify"],
   },
   nitro: {
     preset: "node-server",
@@ -60,6 +61,11 @@ export default defineNuxtConfig({
         },
       },
     },
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
+    },
   },
   typescript: { shim: false },
 
@@ -83,13 +89,19 @@ export default defineNuxtConfig({
     stores: getPath("stores"),
     static: getPath("static"),
   },
-  plugins: ["~/plugins/api.ts"],
+  plugins: ["~/plugins/api.ts", "~/plugins/vuetify.ts"],
   modules: [
     "@vueuse/nuxt",
     "@pinia/nuxt",
     "@vee-validate/nuxt",
     "@nuxtjs/i18n",
     "@sidebase/nuxt-auth",
+    (_options, nuxt) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
+    },
   ],
   auth: {
     globalAppMiddleware: true,

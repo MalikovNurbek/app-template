@@ -1,7 +1,9 @@
 <template>
   <NuxtLayout>
     <NuxtLoadingIndicator color="#AE4CFB" :height="2" />
-    <NuxtPage />
+    <v-app>
+      <NuxtPage />
+    </v-app>
   </NuxtLayout>
   <UINotify />
 </template>
